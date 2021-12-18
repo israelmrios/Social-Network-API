@@ -38,7 +38,7 @@ module.exports = {
           ? res.status(404).json({ message: "No user with that ID" })
           : res.json({
               user,
-              friend: await friend(req.params.userId),
+              // friend: await friend(req.params.userId),
             })
       )
       .catch((err) => {
@@ -93,7 +93,7 @@ module.exports = {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $addToSet: { friends: req.params.friendId } },
-    //   { runValidators: true },
+      //   { runValidators: true },
       { new: true }
     )
       .then((newFriend) =>
@@ -103,8 +103,18 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  deleteFriend(req, res) {
-// add deleteFriend controller
+  removeFriend(req, res) {
+    User.findByIdAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      //   { runValidators: true },
+      { new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: "No user found with that ID" })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
   },
-  
 };
