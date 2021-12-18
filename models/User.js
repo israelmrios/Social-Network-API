@@ -21,14 +21,12 @@ const userSchema = new mongoose.Schema(
       // },
       required: [true, "User email address required"],
     },
-    // Array of _id values referencing the Thought model
     thoughts: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Thought",
       },
     ],
-    // Array of _id values referencing the Thought model
     friends: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -44,7 +42,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
 userSchema.virtual("friendCount").get(function () {
   return this.friends.length;
 });
