@@ -6,14 +6,14 @@ const headCount = async () =>
     .then((numberOfUsers) => numberOfUsers);
 
 const friend = async (userId) =>
-    User.aggregate([
-        {
-            $unwind: '$friends',
-        },
-        {
-            $group: { _id: userId },
-        },
-    ]);
+  User.aggregate([
+    {
+      $unwind: "$friends",
+    },
+    {
+      $group: { _id: userId },
+    },
+  ]);
 
 module.exports = {
   getUsers(req, res) {
@@ -51,4 +51,60 @@ module.exports = {
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      //   { runValidators: true },
+      { new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(400).json({ message: "No User with this ID!" })
+          : res.json(user)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+  deleteUser(req, res) {
+    User.findOneAndDelete({ _id: req.params.userId })
+      //   .then((user) =>
+      //     !user
+      //       ? res.status(404).json({ message: "No User with this ID" })
+      //       : Thought.findOneAndDelete(
+      //           { users: req.params.userId },
+      //           { $pull: { users: req.params.userId } },
+      //           { new: true }
+      //         )
+      //   )
+      .then((user) =>
+        !user
+          ? res.status(400).json({
+              message: "User created but no though with this ID!",
+            })
+          : res.json({ message: "User successfully deleted!" })
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  addFriend(req, res) {
+    console.log("You are adding a Friend");
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+    //   { runValidators: true },
+      { new: true }
+    )
+      .then((newFriend) =>
+        !newFriend
+          ? res.status(400).json({ message: "No Friend found with that ID" })
+          : res.json(newFriend)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  deleteFriend(req, res) {
+// add deleteFriend controller
+  },
+  
 };
