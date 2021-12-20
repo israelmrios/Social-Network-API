@@ -64,7 +64,10 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+    Thought.findOneAndDelete(
+    { _id: req.params.thoughtId },
+    { new: true }
+    )
       .then((thought) =>
         !thought
           ? res.status(404).json({
@@ -74,7 +77,6 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-
   // create and delete Reactions Functions not working
   createReaction(req, res) {
     console.log("You are adding a Reaction to a Thought.");
@@ -93,7 +95,7 @@ module.exports = {
   removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reactions: req.params.reactionId } },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { new: true }
     )
       .then((thought) =>

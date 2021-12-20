@@ -26,7 +26,7 @@ const ReactionSchema = new mongoose.Schema(
         toJSON: {
             getters: true,
         },
-        id: false
+        id: false,
     }
 )
 
