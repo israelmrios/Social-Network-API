@@ -70,22 +70,24 @@ module.exports = {
   },
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
-      //   .then((user) =>
-      //     !user
-      //       ? res.status(404).json({ message: "No User with this ID" })
-      //       : Thought.findOneAndDelete(
-      //           { users: req.params.userId },
-      //           { $pull: { users: req.params.userId } },
-      //           { new: true }
-      //         )
-      //   )
+        // .then((user) =>
+        //   !user
+        //     ? res.status(404).json({ message: "No User with this ID" })
+        //     : Thought.findOneAndDelete(
+        //         { users: req.params.userId },
+        //         { $pull: { users: req.params.userId } },
+        //         { new: true }
+        //       )
+        // )
       .then((user) =>
         !user
           ? res.status(400).json({
-              message: "User created but no though with this ID!",
+              message: "No user with that ID!",
             })
-          : res.json({ message: "User successfully deleted!" })
+          // : res.json({ message: "User successfully deleted!" })
+             : Thought.deleteMany({ _id: { $in: user.thoughts } })
       )
+      .then(() => res.status(200).json({ message: 'User and thoughts were deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   addFriend(req, res) {
