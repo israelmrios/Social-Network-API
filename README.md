@@ -13,7 +13,7 @@ This application is an API for social network web applications. It uses Express.
 
 ## Demo
 
-[DEMO Video](https://drive.google.com/file/d/1_S6DV2rEh2Dqgp0zbZAFXUsqPyajaS7f/view?usp=sharing)
+&#8594; [DEMO Video](https://drive.google.com/file/d/1OaSCF-4akyViGgwkLAPm899teSYR7Okl/view?usp=sharing) &#8592;
 
 ## Installation
 
@@ -29,21 +29,29 @@ How to install this application and getting started:
 
 ### Step 1
 > **Note**: Not all available options and steps will be demonstrated here
-* After the command has been invoked
-* 
-
-![Screenshot of .](./assets/)
+* After the command has been invoked you will see `API server for undefined running on port 3001!`
+![Screenshot of command being invoked.](./assets/app-server-start.png)
 
 ### Step 2
-* 
-
-![Screenshot of .](./assets/)
+* To make a PUT Request enter `http://localhost:3001/api/users/` and click `Send`
+* You will see the Status show `200` and the Preview of the response .json
+![Screenshot of PUT Request.](./assets/get-user.png)
 
 ### Step 3
-* 
+* To make a POST Request enter `http://localhost:3001/api/users/`
+* Include a and JSON Body and enter username & email, click `Send`
+* You will see the Status show `200` and the Preview of the response .json
+![Screenshot of POST Request.](./assets/post-user.png)
 
-![Screenshot of .](./assets/)
-![Screenshot of .](./assets/)
+### Step 4
+* To make a PUT Request enter http://localhost:3001/api/users/"`USER_ID`"
+* You will see the Status show `200` and the Preview of the response .json
+![Screenshot of PUT Request.](./assets/put-user.png)
+
+### Step 5
+* To make a PUT Request enter http://localhost:3001/api/users/"`USER_ID`"
+* You will see the Status show `200` and the Preview letting you know "User and thoughts were deleted!"
+![Screenshot of DELETE Request.](./assets/delete-user.png)
 > **Note**: Not all applications options are demonstrated or depicted here
 
 ## Contributing
